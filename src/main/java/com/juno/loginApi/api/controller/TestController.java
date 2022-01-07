@@ -17,7 +17,7 @@ public class TestController {
         CommonV1.CommonV1Builder<Object> builder = CommonV1.builder();
         builder.result("success");
         builder.code("200");
-        builder.data(null);
+        builder.data("뭐라도 넣어야함");
         builder.msg("성공");
 
         CommonV1 result = builder.build();
