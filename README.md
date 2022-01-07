@@ -1,6 +1,5 @@
 # Eats Login API
 
 `2022.01.07`
-- add jira
-
-= test
+- jira 추가
+- 공통 response, exception 추가
