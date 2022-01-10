@@ -1,3 +1,4 @@
+/*
 package com.juno.loginApi.api.controller;
 
 import org.json.JSONObject;
@@ -29,7 +30,7 @@ class TestControllerTest {
     @Autowired
     private MockMvc mock;
 
-    @Test
+    //@Test
     @DisplayName("테스트")
     void test() throws Exception{
         //given
@@ -61,3 +62,4 @@ class TestControllerTest {
         ));
     }
 }
+*/
