@@ -7,20 +7,20 @@ endif::[]
 :toclevels: 4
 :toc-title: eats api
 
-== API TEST
+== 회원가입
 
 === REQUEST
 
-include::{snippets}/test-api/http-request.adoc[]
+include::{snippets}/login/join/http-request.adoc[]
 
 === REQEUST FIELD
 
-include::{snippets}/test-api/request-fields.adoc[]
+include::{snippets}/login/join/request-fields.adoc[]
 
 === RESPONSE
 
-include::{snippets}/test-api/http-response.adoc[]
+include::{snippets}/login/join/http-response.adoc[]
 
 === RESPONSE FIELD
 
-include::{snippets}/test-api/response-fields.adoc[]
+include::{snippets}/login/join/response-fields.adoc[]

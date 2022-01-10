@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -29,17 +30,17 @@ public class MemberEntity implements UserDetails {
     @Column(nullable = false, unique = true, length = 30)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 200)
     private String pw;
 
     @Column(name = "auth")
-    private String auth;
+    @CollectionTable(name = "member_roles")
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<String> auth;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<GrantedAuthority> roles = new HashSet<>();
-        for(String role : auth.split(",")) roles.add(new SimpleGrantedAuthority(role));
-        return roles;
+        return this.auth.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
