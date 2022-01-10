@@ -10,14 +10,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,14 +29,11 @@ public class LoginController {
 
     @PostMapping(value = "/join")
     public ResponseEntity join(@RequestBody @Valid MemberDto md, BindingResult bindingResult){
-        //에러가 있다면
+        //빈값 체크
         if(bindingResult.hasErrors()){
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-            Queue<ObjectError> set = new LinkedList<>();
-            set.addAll(allErrors);
-            throw new JoinValidException("잘못된 회원가입 데이터 요청", HttpStatus.BAD_REQUEST, set);
+            throw new JoinValidException("잘못된 회원가입 데이터 요청", HttpStatus.BAD_REQUEST, bindingResult.getAllErrors());
         }
-        //정상 진행
+
         MemberVo join = loginService.join(md);
 
         CommonV1 result = CommonV1.builder()
