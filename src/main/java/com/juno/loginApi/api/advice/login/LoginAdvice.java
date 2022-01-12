@@ -11,21 +11,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 @RestControllerAdvice
 public class LoginAdvice {
     @ExceptionHandler(JoinValidException.class)
     public ResponseEntity joinValidException(JoinValidException jve){
-        Queue<ObjectError> allErrors = jve.getAllErrors();
+        List<ObjectError> allErrors = jve.getAllErrors();
 
         List<CommonError> errorList = new ArrayList<>();
-
-        for(ObjectError oe : allErrors){
-            String detail = ((FieldError)oe).getField() + " " + oe.getDefaultMessage();
-            CommonError commonError = new CommonError(jve.getMsg(), detail);
+        if(allErrors.isEmpty()){
+            CommonError commonError = new CommonError(jve.getMsg());
             errorList.add(commonError);
+        }else{
+            for(ObjectError oe : allErrors){
+                String detail = ((FieldError)oe).getField() + " " + oe.getDefaultMessage();
+                CommonError commonError = new CommonError(jve.getMsg(), detail);
+                errorList.add(commonError);
+            }
         }
+
         CommonErrorV1<List<CommonError>> result = new CommonErrorV1<>(errorList);
         return new ResponseEntity<CommonErrorV1>(result, jve.getStatus());
     }
