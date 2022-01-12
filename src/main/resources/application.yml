@@ -2,15 +2,29 @@ server:
   port: 8080
 
 spring:
+  h2:
+    console:
+      enabled: true
+
   datasource:
-    url: jdbc:h2:tcp://localhost/~/login-api
+    url: jdbc:h2:mem:logindb
     driver-class-name: org.h2.Driver
     username: sa
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: create-drop
+      format_sql: true
+      show-sql: true
+    defer-datasource-initialization: true
+
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'juno-eats-toy-project-spring-boot-jwt-secret-login-api-juno-eats-toy-project-spring-boot-jwt-secret-login-api-secret'|base64
+  secret: juno-eats-toy-project-spring-boot-jwt-secret-login-api-juno-eats-toy-project-spring-boot-jwt-secret-login-api-secret
+  token-validity-in-seconds: 8460000
 
 logging:
   level:
